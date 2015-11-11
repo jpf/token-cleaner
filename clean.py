@@ -2,7 +2,9 @@ import sys
 import string
 
 dirty = sys.argv[1]
+skip = ['-', '/']
 clean = ''
+
 
 def list_spinner(input_list, initial_offset=0):
     offset = initial_offset
@@ -17,7 +19,9 @@ numbers = list_spinner(list(string.digits))
 symbols = list_spinner(list(string.punctuation))
 
 for char in dirty:
-    if char.islower():
+    if char in skip:
+        rv = char
+    elif char.islower():
         rv = letters.next()
     elif char.isupper():
         rv = letters.next().upper()
