@@ -1,10 +1,10 @@
 # This is a file written in Emacs and authored using org-mode (http://orgmode.org/)
 # The "README.md" file is generated from this file by running the
 # "M-x org-md-export-to-markdown" command from inside of Emacs.
-#
+# 
 # The "cleaner.py" file is generated from this file by running the
 # "M-x org-babel-tangle" command from inside of Emacs.
-#
+# 
 # Don't render a Table of Contents 
 #+OPTIONS: toc:nil
 # Don't render section numbers
@@ -34,11 +34,10 @@
      import string
    #+END_SRC
 
-   We start by getting the input, using =sys.argv= for now.
-
-   We also define the =skip= array, which holds the characters we want
-   to skip and define a =clean= variable, which will hold our
-   "cleaned" output:
+   We start by getting the input (using =sys.argv= for now). We also
+   define the =skip= array, which holds the characters we want to skip
+   and define a =clean= variable, which will hold our "cleaned"
+   output:
    #+NAME: get-input
    #+BEGIN_SRC python
      dirty = sys.argv[1]
@@ -97,3 +96,24 @@
 
      <<process-input>>
    #+END_SRC
+* Copyright							   :noexport:
+  #+NAME: copyright
+  #+BEGIN_SRC text :tangle LICENSE
+    GNU Affero General Public License
+
+    "Token Cleaner" - Turns an authentication token into a similar looking, but obviously fake token
+    Copyright (C) 2015, Joel Franusic
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  #+END_SRC

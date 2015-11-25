@@ -17,11 +17,10 @@ and makes a "fake" token that looks like "`a01BcDef2GH`"
 
 ## How it works:
 
-We start by getting the input, using `sys.argv` for now.
-
-We also define the `skip` array, which holds the characters we want
-to skip and define a `clean` variable, which will hold our
-"cleaned" output:
+We start by getting the input (using `sys.argv` for now). We also
+define the `skip` array, which holds the characters we want to skip
+and define a `clean` variable, which will hold our "cleaned"
+output:
 
     dirty = sys.argv[1]
     skip = ['-', '/']
