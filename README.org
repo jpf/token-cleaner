@@ -1,0 +1,99 @@
+# This is a file written in Emacs and authored using org-mode (http://orgmode.org/)
+# The "README.md" file is generated from this file by running the
+# "M-x org-md-export-to-markdown" command from inside of Emacs.
+#
+# The "cleaner.py" file is generated from this file by running the
+# "M-x org-babel-tangle" command from inside of Emacs.
+#
+# Don't render a Table of Contents 
+#+OPTIONS: toc:nil
+# Don't render section numbers
+#+OPTIONS: num:nil
+# Turn of subscript parsing: http://super-user.org/wordpress/2012/02/02/how-to-get-rid-of-subscript-annoyance-in-org-mode/comment-page-1/
+#+OPTIONS: ^:{}
+* Token cleaner
+  Turns an authentication token into a similar looking, but obviously
+  fake token.
+
+  This is useful for documentation or sample configuration files,
+  where you want to have a similar "look" but don't want to put a
+  real token.
+
+
+  Takes a real token like: "=b45HoPmm4HG="
+  and makes a "fake" token that looks like "=a01BcDef2GH="
+** Usage:
+   #+BEGIN_EXAMPLE
+     $ python clean.py b45HoPmm4HG
+     a01BcDef2GH
+   #+END_EXAMPLE
+** How it works:
+   #+NAME: imports
+   #+BEGIN_SRC python :exports none
+     import sys
+     import string
+   #+END_SRC
+
+   We start by getting the input, using =sys.argv= for now.
+
+   We also define the =skip= array, which holds the characters we want
+   to skip and define a =clean= variable, which will hold our
+   "cleaned" output:
+   #+NAME: get-input
+   #+BEGIN_SRC python
+     dirty = sys.argv[1]
+     skip = ['-', '/']
+     clean = ''
+   #+END_SRC
+
+   Next we define a =list_spinner= [[http://stackoverflow.com/a/231855][generator]], which allows you to
+   "spin" through an array of elements, one by one, using the =next()=
+   method:
+   #+NAME: create-dials
+   #+BEGIN_SRC python
+
+     def list_spinner(input_list, initial_offset=0):
+         offset = initial_offset
+         while True:
+             if (offset + 1) > len(input_list):
+                 offset = initial_offset
+             yield(input_list[offset])
+             offset += 1
+
+     letters = list_spinner(list(string.ascii_lowercase))
+     numbers = list_spinner(list(string.digits))
+     symbols = list_spinner(list(string.punctuation))
+   #+END_SRC
+
+   Finally, we iterate through each character in the "dirty" input to
+   produce a "cleaned" output, by detecting the type of input
+   character and selecting a replacement character from the =next()=
+   character in the list of the input character type:
+   #+NAME: process-input
+   #+BEGIN_SRC python
+     for char in dirty:
+         if char in skip:
+             rv = char
+         elif char.islower():
+             rv = letters.next()
+         elif char.isupper():
+             rv = letters.next().upper()
+         elif char.isdigit():
+             rv = numbers.next()
+         else:
+             rv = symbols.next()
+         clean += str(rv)
+
+     print(clean)
+   #+END_SRC
+
+   #+NAME: main
+   #+BEGIN_SRC python :tangle clean.py :noweb yes :exports none
+     <<imports>>
+
+     <<get-input>>
+
+     <<create-dials>>
+
+     <<process-input>>
+   #+END_SRC
